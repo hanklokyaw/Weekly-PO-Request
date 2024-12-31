@@ -70,8 +70,13 @@ else:
                                                                         'Pending Supervisor Approval')
     grouped_df = grouped_df.sort_values(['Date', 'Document Number'], ascending=[False, True])
 
-    # group amazon orders
-    result_df = group_amazon_orders(grouped_df)
+    if len(grouped_df[grouped_df['Vendor'].str.contains('Amazon')]) >0:
+        # group amazon orders
+        result_df = group_amazon_orders(grouped_df)
 
-    print(grouped_df)
-    result_df.to_excel(f"ANA Weekly PO Request {today}.xlsx", index=False)
+        print(grouped_df)
+        result_df.to_excel(f"ANA Weekly PO Request {today}.xlsx", index=False)
+
+    else:
+        print(grouped_df)
+        grouped_df.to_excel(f"ANA Weekly PO Request {today}.xlsx", index=False)
